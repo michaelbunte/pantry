@@ -3,8 +3,9 @@ cake
 candy
 
 == fridge ==
+candy
 burger # 10/10/2025
-buns
+buns # 10/11/2025
 
 == frozen ==
 pizza

@@ -24,7 +24,6 @@ def extract_date(line):
     try:
         return get_date_obj(second_string)
     except:
-        get_date_obj(second_string)
         raise Exception()
 
 
@@ -44,13 +43,18 @@ def separate(input_text_arr):
     groups = {}
     last_group = None
     for line in input_text_arr:
+
+        # remove comments
+        line = line.split(">")[0].strip()
         if len(line) == 0:
             continue
+
         elif line[0] == '=' and line[len(line) - 1] == '=':
             inner_text = remove_equals(line)
             groups[inner_text] = []
             last_group = inner_text
             continue
+
         if last_group is None:
             raise Exception()
 
@@ -66,16 +70,25 @@ def separate(input_text_arr):
 
 def main():
     output_path = "./"
-    group_names = ["fridge", "frozen", "shopping list"]
+    group_names = ["shopping list", "fridge", "frozen"]
     output_file_name = "inputfile.txt"
     input_text_arr = file_to_array(output_path + output_file_name)
     groups = separate(input_text_arr)
-    print(groups)
 
     for group_name in group_names:
+        print("=" * 5 + " " + group_name + " " + "=" * 5)
         entries = groups[group_name]
-        
+        sorted_entries = sorted(entries, key=lambda entry: entry["date"] if not (entry["date"] is None) else date(1000,1,1))
+        for entry in sorted_entries:
+            print(entry["name"], end="")
+            if entry["date"] is None:
+                print()
+                continue
+            print( " - " + entry["date"].strftime("%d/%m/%Y"))
 
+        print()
+        
+    
 
       
 main()
