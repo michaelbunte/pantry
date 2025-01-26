@@ -113,7 +113,5 @@ def main():
                 file.write( " - " + sorted_entries[i]["date"].strftime("%d/%m/%Y") + "\n")
 
             file.write("\n")
-    
 
-      
 main()
