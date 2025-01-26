@@ -2,5 +2,5 @@
     "path": "./files/",
     "group_names": ["shopping list", "fridge", "cupboard", "frozen"],
     "input_file_name": "inputfile.txt",
-    "output_file_name": "outputfile.txt"
+    "output_file_name": "README"
 }
