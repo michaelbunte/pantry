@@ -1,5 +1,6 @@
 {
     "path": "./files/",
     "group_names": ["shopping list", "fridge", "frozen"],
-    "input_file_name": "inputfile.txt"
+    "input_file_name": "inputfile.txt",
+    "output_file_name": "outputfile.txt"
 }

@@ -71,27 +71,48 @@ def separate(input_text_arr):
 
 def main():
     with open('config.json', 'r') as file:
-        data = json.load(file)
-    path = data["path"]
-    group_names = data["group_names"]
-    input_file_name = data["input_file_name"]
+        config_data = json.load(file)
+    path = config_data["path"]
+    group_names = config_data["group_names"]
+    input_file_name = config_data["input_file_name"]
+    output_file_name = config_data["output_file_name"]
 
     input_text_arr = file_to_array(path + input_file_name)
     groups = separate(input_text_arr)
 
-    for group_name in group_names:
-        print("=" * 5 + " " + group_name + " " + "=" * 5)
-        entries = groups[group_name]
-        sorted_entries = sorted(entries, key=lambda entry: entry["date"] if not (entry["date"] is None) else date(1000,1,1))
-        for entry in sorted_entries:
-            print(entry["name"], end="")
-            if entry["date"] is None:
-                print()
-                continue
-            print( " - " + entry["date"].strftime("%d/%m/%Y"))
+    current_date = date.today()
 
-        print()
-        
+
+    with open(path + output_file_name, "w") as file:
+        for group_name in group_names:
+            
+            has_reached_not_expired = False
+            has_reached_expired = False
+
+            file.write("=" * 5 + " " + group_name + " " + "=" * 5 + "\n")
+            entries = groups[group_name]
+            sorted_entries = sorted(entries, key=lambda entry: entry["date"] if not (entry["date"] is None) else date(1000,1,1))
+
+            for i in range(len(sorted_entries)):
+                if not(sorted_entries[i]["date"] is None) and sorted_entries[i]["date"] < current_date and not has_reached_expired:
+                    has_reached_expired = True
+                    if i != 0:
+                        file.write("\n")
+                    file.write("EXPIRED\n")
+                elif not(sorted_entries[i]["date"] is None) and sorted_entries[i]["date"] >= current_date and not has_reached_not_expired:
+                    has_reached_not_expired = True
+                    if i != 0:
+                        file.write("\n")
+                    file.write("FRESH\n")
+
+                file.write(sorted_entries[i]["name"])
+                if sorted_entries[i]["date"] is None:
+                    file.write("\n")
+                    continue
+
+                file.write( " - " + sorted_entries[i]["date"].strftime("%d/%m/%Y") + "\n")
+
+            file.write("\n")
     
 
       
