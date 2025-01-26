@@ -1,0 +1,12 @@
+== shopping list ==
+cake
+candy
+
+== fridge ==
+burger # 10/10/2025
+buns
+
+== frozen ==
+pizza
+cheese
+eggs
