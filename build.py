@@ -74,9 +74,9 @@ def main():
         data = json.load(file)
     path = data["path"]
     group_names = data["group_names"]
-    output_file_name = data["output_file_name"]
+    input_file_name = data["input_file_name"]
 
-    input_text_arr = file_to_array(path + output_file_name)
+    input_text_arr = file_to_array(path + input_file_name)
     groups = separate(input_text_arr)
 
     for group_name in group_names:
