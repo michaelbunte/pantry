@@ -1,4 +1,5 @@
 import re
+import json
 from datetime import date
 
 def extract_name(line):
@@ -69,10 +70,13 @@ def separate(input_text_arr):
 
 
 def main():
-    output_path = "./"
-    group_names = ["shopping list", "fridge", "frozen"]
-    output_file_name = "inputfile.txt"
-    input_text_arr = file_to_array(output_path + output_file_name)
+    with open('config.json', 'r') as file:
+        data = json.load(file)
+    path = data["path"]
+    group_names = data["group_names"]
+    output_file_name = data["output_file_name"]
+
+    input_text_arr = file_to_array(path + output_file_name)
     groups = separate(input_text_arr)
 
     for group_name in group_names:
