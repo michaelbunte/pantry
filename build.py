@@ -13,9 +13,10 @@ def get_second_string(line):
     
 def get_date_obj(date_string):
     date_arr = date_string.split("/")
-    day = int(date_arr[0])
-    month = int(date_arr[1])
+    day = int(date_arr[1])
+    month = int(date_arr[0])
     year = int(date_arr[2])
+    year = year + 2000 if year < 100 else year
     return date(year, month, day)
 
 def extract_date(line):
@@ -105,12 +106,11 @@ def main():
                         file.write("\n")
                     file.write("FRESH\n")
 
+                if not (sorted_entries[i]["date"] is None):
+                    file.write(sorted_entries[i]["date"].strftime("%m/%d/%Y") + " - ")
+                
                 file.write(sorted_entries[i]["name"])
-                if sorted_entries[i]["date"] is None:
-                    file.write("\n")
-                    continue
-
-                file.write( " - " + sorted_entries[i]["date"].strftime("%d/%m/%Y") + "\n")
+                file.write("\n")
 
             file.write("\n")
 
